@@ -10,6 +10,7 @@ client.on('message', (message) => {
         const [command, ...args] = message.content.trim().substring(prefix.length).split(/\s+/);
         var flip = Math.floor(Math.random() * 2) + 1;
 
+        //Logic for coin flip
         if (command === 'flip' && flip === 1) {
             message.channel.send('HEADS')
         } else if (command === 'flip' && flip === 2) {

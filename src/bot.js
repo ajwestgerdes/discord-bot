@@ -4,7 +4,7 @@ const { Client } = require('discord.js');
 const client = new Client();
 const prefix = "!";
 
-//check for !flip in messages, send HEADS or TAILS message based on rng
+//check for !flip in messages, send HEADS or TAILS message based on rng 
 client.on('message', (message) => {
     if (message.content.startsWith(prefix)) {
         const [command, ...args] = message.content.trim().substring(prefix.length).split(/\s+/);

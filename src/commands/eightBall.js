@@ -19,7 +19,7 @@ exports.eightBall = function (args) {
             eanswer = ' Same';
         }
         
-        return (equestion + '\n' + eanswer);
+        return (equestion + '\n8ball says: ' + eanswer);
 }
 
 

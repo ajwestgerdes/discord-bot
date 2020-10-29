@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const triviaDB = require('triviadb');
 const { Client } = require('discord.js');
 const client = new Client();
 const prefix = "!";
@@ -22,15 +23,19 @@ client.on('message', (message) => {
         }
 
         if (command === 'trivia') {
-            let ques = triviaModule.triviaQuestion()
-            console.log("in bot js: " + ques.then(function(result) {
-                result // "Some User token"
-             }))               
-        }
-           
-        } 
-    }
-) 
+            let AuthUser = function() {
+                return triviaDB.getQuestions(1, null, "easy").then(token => { return token } )
+              }
+              
+              let userToken = AuthUser()
+              console.log("let user token:  " + userToken) // Promise { <pending> }
+
+              return userToken.then(function(result) {
+                console.log(result) // "Some User token"
+             })              
+        }        
+    } 
+}) 
 
 //login bot
 client.login(process.env.BOT_TOKEN);

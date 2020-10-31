@@ -34,7 +34,12 @@ client.on('message', (message) => {
 
               return triviaResult.then(function(result) {
                 answerArray = result.results[0].incorrect_answers.push(result.results[0].correct_answer);
-                message.channel.send(result.results[0].question) // "Some User token"
+                message.channel.send(result.results[0].question).then(function (message) {
+                    message.react("👎")
+                    message.react("👎")
+                  }).catch(function() {
+                    //Something
+                   });
                 console.log(result)
                 console.log(result.results[0].correct_answer)
                 console.log(result.results[0].incorrect_answers.sort())

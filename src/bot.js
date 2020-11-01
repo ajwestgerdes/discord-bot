@@ -35,21 +35,61 @@ client.on('message', (message) => {
               return triviaResult.then(function(result) {
                 answerArray = result.results[0].incorrect_answers.push(result.results[0].correct_answer);
                 message.channel.send(result.results[0].question).then(function (message) {
-                    message.react("👎")
-                    message.react("👎")
+                    message.react("🇦")
+                    message.react("🇧")
+                    message.react("🇨")
+                    message.react("🇩")
                   }).catch(function() {
                     //Something
                    });
                 console.log(result)
                 console.log(result.results[0].correct_answer)
+                correctAnswer = result.results[0].correct_answer
                 console.log(result.results[0].incorrect_answers.sort())
-                console.log(answerArray)
                 answerArray = result.results[0].incorrect_answers.sort()
 
                 for(x in answerArray) {
                     abcArray = ['A','B','C','D']
                     message.channel.send(abcArray[x] + ': ' + answerArray[x])
                 }
+                client.on('messageReactionAdd', (reaction) => {
+                    let emoji = reaction.emoji;
+                    console.log(emoji.reaction.count)
+            
+
+                    switch (emoji.name) {
+                        case "🇦":           
+                            if (correctAnswer === answerArray[0] && emoji.reaction.count > 1){
+                                emoji.remove()
+                                return message.channel.send("correct") 
+                            } else if (correctAnswer !== answerArray[0] && emoji.reaction.count > 1) {
+                                emoji.remove()
+                                return message.channel.send("nope")
+                            }
+                            break
+                        case "🇧":
+                            if (correctAnswer === answerArray[1] && emoji.reaction.count > 1){
+                                    return message.channel.send("correct")
+                                } else if (correctAnswer !== answerArray[1] && emoji.reaction.count > 1) {
+                                     return message.channel.send("nope")
+                                }
+                                break
+                        case "🇨":
+                            if (correctAnswer === answerArray[2] && emoji.reaction.count > 1){
+                                return message.channel.send("correct")
+                            } else if (correctAnswer !== answerArray[2] && emoji.reaction.count > 1) {
+                                 return message.channel.send("nope")
+                            }
+                            break
+                        case "🇩":
+                            if (correctAnswer === answerArray[3] && emoji.reaction.count > 1){
+                                return message.channel.send("correct")
+                            } else if (correctAnswer !== answerArray[3] && emoji.reaction.count > 1) {
+                                 return message.channel.send("nope")
+                            }
+                    }
+            
+            });
                 
                 console.log(answerArray)
                 

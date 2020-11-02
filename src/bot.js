@@ -25,74 +25,95 @@ client.on('message', (message) => {
         }
 
         if (command === 'trivia') {
+            //initialize triviadb and create object
             let TriviaQuestion = function() {
                 return triviaDB.getQuestions(1, null, "easy").then(token => { return token } )
               }
               
               let triviaResult = TriviaQuestion()
-              console.log("let user token:  " + triviaResult)
 
+              //gets trivia question, displays question, adds reaction for user to select answer
               return triviaResult.then(function(result) {
                 answerArray = result.results[0].incorrect_answers.push(result.results[0].correct_answer);
-                message.channel.send(result.results[0].question).then(function (message) {
+
+                //replace string entities with the correspoinding symbol
+                var strQuestion = result.results[0].question
+                var mapObj = {
+                    '&quot;': '"',
+                    '&#039;': "'",
+                }
+                strQuestion = strQuestion.replace(/&quot;|&#039;/gi, function(matched){
+                    return mapObj[matched];
+                })
+
+                message.channel.send(strQuestion).then(function (message) {
                     message.react("🇦")
                     message.react("🇧")
                     message.react("🇨")
                     message.react("🇩")
                   }).catch(function() {
-                    //Something
+                    console.log('err')
                    });
-                console.log(result)
-                console.log(result.results[0].correct_answer)
                 correctAnswer = result.results[0].correct_answer
-                console.log(result.results[0].incorrect_answers.sort())
                 answerArray = result.results[0].incorrect_answers.sort()
-
+                
+                //displays possible answers for user
                 for(x in answerArray) {
                     abcArray = ['A','B','C','D']
                     message.channel.send(abcArray[x] + ': ' + answerArray[x])
                 }
-                client.on('messageReactionAdd', (reaction) => {
-                    let emoji = reaction.emoji;
-                    console.log(emoji.reaction.count)
-            
 
-                    switch (emoji.name) {
+                let answerCount = 0
+                const msgCorrect = "**CORRECT**";
+                const msgIncorrect = "**INCORRECT**, the correct answer is: " + correctAnswer;
+
+                //check for user reactions
+                client.on('messageReactionAdd', (reaction) => {
+                let emoji = reaction.emoji; 
+                
+                //logic for what answer the user selects
+                if (answerCount === 0) {          
+                    switch (emoji.name) {                       
                         case "🇦":           
-                            if (correctAnswer === answerArray[0] && emoji.reaction.count > 1){
-                                emoji.remove()
-                                return message.channel.send("correct") 
+                            if (correctAnswer === answerArray[0] && emoji.reaction.count > 1){ 
+                                answerCount++
+                                return message.channel.send(msgCorrect)
                             } else if (correctAnswer !== answerArray[0] && emoji.reaction.count > 1) {
-                                emoji.remove()
-                                return message.channel.send("nope")
+                                answerCount++
+                                return message.channel.send(msgIncorrect)
                             }
+                            
                             break
                         case "🇧":
                             if (correctAnswer === answerArray[1] && emoji.reaction.count > 1){
-                                    return message.channel.send("correct")
-                                } else if (correctAnswer !== answerArray[1] && emoji.reaction.count > 1) {
-                                     return message.channel.send("nope")
+                                    answerCount++
+                                    return message.channel.send(msgCorrect)
+                                } else if (correctAnswer !== answerArray[1] && emoji.reaction.count > 1) { 
+                                    answerCount++                             
+                                    return message.channel.send(msgIncorrect)
                                 }
                                 break
                         case "🇨":
-                            if (correctAnswer === answerArray[2] && emoji.reaction.count > 1){
-                                return message.channel.send("correct")
-                            } else if (correctAnswer !== answerArray[2] && emoji.reaction.count > 1) {
-                                 return message.channel.send("nope")
+                            if (correctAnswer === answerArray[2] && emoji.reaction.count > 1){   
+                                answerCount++                         
+                                return message.channel.send(msgCorrect)
+                            } else if (correctAnswer !== answerArray[2] && emoji.reaction.count > 1) { 
+                                answerCount++                            
+                                return message.channel.send(msgIncorrect)
                             }
                             break
                         case "🇩":
                             if (correctAnswer === answerArray[3] && emoji.reaction.count > 1){
-                                return message.channel.send("correct")
-                            } else if (correctAnswer !== answerArray[3] && emoji.reaction.count > 1) {
-                                 return message.channel.send("nope")
+                                answerCount++
+                                return message.channel.send(msgCorrect)
+                            } else if (correctAnswer !== answerArray[3] && emoji.reaction.count > 1) {  
+                                answerCount++    
+                                return message.channel.send(msgIncorrect)
                             }
                     }
-            
-            });
-                
-                console.log(answerArray)
-                
+                }
+                    
+            });              
              })              
         }        
     } 

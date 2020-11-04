@@ -10,7 +10,7 @@ exports.eightBall = function (args) {
         } else if (eball === 2) {
             eanswer = 'Maybe, ask when Jetts cousins leave';
         } else if (eball === 3) {
-            eanswer = 'Chungus gives thumbs up';
+            eanswer = 'Chungus gives BIG thumbs up';
         } else if (eball === 4) {
             eanswer = 'Nah';
         } else if (eball === 5) {
@@ -19,6 +19,10 @@ exports.eightBall = function (args) {
             eanswer = 'Same';
         }else if (eball === 7) {
             eanswer = 'Big yes';
+        }else if (eball === 7) {
+            eanswer = 'Max the loli king says Yes';
+        }else if (eball === 7) {
+            eanswer = 'Noah is confused, ask again';
         }
         
         return (equestion + '\n8ball says: ' + eanswer);

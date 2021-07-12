@@ -1,4 +1,4 @@
-exports.flip = function () {
+export function flip() {
     var flip = Math.floor(Math.random() * 2) + 1;
     //Logic for coin flip
     if (flip === 1) {

@@ -1,13 +1,16 @@
-require('dotenv').config();
+import dotenv from 'dotenv'
+import {flip} from './commands/flip.js'
+import {triva} from './commands/trivia.js'
+import {stopwatch} from './commands/stopwatch.js'
+import triviaDB from 'triviadb'
+import discord from 'discord.js'
 
-const triviaDB = require('triviadb');
-const { Client } = require('discord.js');
-const client = new Client();
+dotenv.config()
+
+// const triviaDB = require('triviadb');
+// const { Client } = require('discord.js');
+const client = new discord.Client();
 const prefix = "!";
-
-let flipModule = require('./commands/flip.js');
-let eightBallModule = require('./commands/eightBall.js');
-let triviaModule = require('./commands/trivia.js');
 
 var answerArray = [];
 
@@ -17,11 +20,11 @@ client.on('message', (message) => {
         const [command, ...args] = message.content.trim().substring(prefix.length).split(/\s+/);
        
         if (command === 'flip') {
-            message.channel.send(flipModule.flip())
+            message.channel.send(flip)
         }
 
-        if (command === '8ball') {
-            message.channel.send(eightBallModule.eightBall(args))
+        if (command === 'stopwatch') {
+            message.channel.send(stopwatch())
         }
 
         if (command === 'trivia') {

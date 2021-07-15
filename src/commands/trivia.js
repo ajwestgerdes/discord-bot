@@ -1,4 +1,6 @@
-export function triva() {
+import triviaDB from 'triviadb'
+
+export function triva(message, client) {
   //initialize triviadb and create object
   let TriviaQuestion = function() {
     return triviaDB.getQuestions(1, null, "easy").then(token => { return token } )
@@ -8,7 +10,7 @@ export function triva() {
 
   //gets trivia question, displays question, adds reaction for user to select answer
   return triviaResult.then(function(result) {
-    answerArray = result.results[0].incorrect_answers.push(result.results[0].correct_answer);
+   let answerArray = result.results[0].incorrect_answers.push(result.results[0].correct_answer);
 
     //replace string entities with the correspoinding symbol
     var strQuestion = result.results[0].question
@@ -28,12 +30,12 @@ export function triva() {
       }).catch(function() {
         console.log('err')
         });
-    correctAnswer = result.results[0].correct_answer
+    let correctAnswer = result.results[0].correct_answer
     answerArray = result.results[0].incorrect_answers.sort()
     
     //displays possible answers for user
-    for(x in answerArray) {
-        abcArray = ['A','B','C','D']
+    for(let x in answerArray) {
+        let abcArray = ['A','B','C','D']
         message.channel.send(abcArray[x] + ': ' + answerArray[x])
     }
 
@@ -90,20 +92,3 @@ export function triva() {
 });              
   }) 
 }
-
-// exports.triviaQuestion = function () {
-//     let AuthUser = function() {
-//         return triviaDB.getQuestions(1, null, "easy").then(token => { return token } )
-//       }
-      
-//       let userToken = AuthUser()
-//       console.log("let user token:  " + userToken) // Promise { <pending> }
-      
-      
-
-//       return userToken.then(function(result) {
-//         result // "Some User token"
-//      })
-// }
-
-

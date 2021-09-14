@@ -1,5 +1,5 @@
 export function stopwatch(message, client) {
-    
+
     let mentionId = message.content.split('@!')[1].slice(0, -1)
     let msgAuther = message.author.username
     let mentionsMap = message.mentions.users
@@ -14,16 +14,16 @@ export function stopwatch(message, client) {
 
     client.on('voiceStateUpdate', (oldState, newState) => {
         console.log('made it inside voice state update')
-        console.log(oldState)
+        console.log(oldState.guild.voiceStates.cache.)
+        console.log(mentionId)
         console.log('------------------------------------------')
-        console.log(oldState.guild)
 
-        let newUserChannel = newMember.voiceChannel
-        let oldUserChannel = oldMember.voiceChannel
+        let newUserChannel = newState.voiceChannel
+        let oldUserChannel = oldState.voiceChannel
       
       
         if(oldUserChannel === undefined && newUserChannel !== undefined) {
-      
+            console.log('made it in user join')
            // User Joins
       
         }

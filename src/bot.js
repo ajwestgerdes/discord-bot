@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 import {flip} from './commands/flip.js'
 import {triva} from './commands/trivia.js'
 import {stopwatch} from './commands/stopwatch.js'
+import {monList} from './commands/monList.js'
 import discord from 'discord.js'
 
 dotenv.config()
@@ -26,7 +27,11 @@ client.on('message', (message) => {
 
         if (command === 'trivia') {
              triva(message, client)
-        }        
+        }   
+        
+        if (command === 'mon') {
+            monList(message, client)
+        }
     } 
 }) 
 

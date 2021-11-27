@@ -14,7 +14,7 @@ export function stopwatch(message, client) {
 
     client.on('voiceStateUpdate', (oldState, newState) => {
         console.log('made it inside voice state update')
-        console.log(oldState.guild.voiceStates.cache.)
+        console.log(oldState.guild.voiceStates.cache)
         console.log(mentionId)
         console.log('------------------------------------------')
 

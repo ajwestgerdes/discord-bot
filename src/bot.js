@@ -4,13 +4,20 @@ import {triva} from './commands/trivia.js'
 import {stopwatch} from './commands/stopwatch.js'
 import {monList} from './commands/monList.js'
 import discord from 'discord.js'
+import express from 'express'
+import mongoose from 'mongoose'
 
 dotenv.config()
 
-const client = new discord.Client();
-const prefix = "!";
+//Set up mongoose connection
+mongoose.connect(process.env.DB_AUTH, { useNewUrlParser: true , useUnifiedTopology: true});
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-var answerArray = [];
+const client = new discord.Client();
+const prefix = '!';
+
+
 
 //check discord for commands then take action based on command
 client.on('message', (message) => {

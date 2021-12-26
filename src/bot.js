@@ -10,9 +10,9 @@ import mongoose from 'mongoose'
 dotenv.config()
 
 //Set up mongoose connection
-mongoose.connect(process.env.DB_AUTH, { useNewUrlParser: true , useUnifiedTopology: true});
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// mongoose.connect(process.env.DB_AUTH, { useNewUrlParser: true , useUnifiedTopology: true});
+// var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const client = new discord.Client();
 const prefix = '!';

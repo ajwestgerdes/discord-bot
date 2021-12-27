@@ -2,7 +2,13 @@ import Discord from 'discord.js'
 
 
 function presetOne() {
+    const presetOnePoll = new Discord.MessageEmbed()
+        .setTitle('Poll Creation')
+        .addField('Question', question, true)
+        .addField('\u200B', '\u200B', true)
+        .addField('Total', ':white_check_mark: ' + totalYes + ' :negative_squared_cross_mark: ' + totalNo, true)
 
+        .setTimestamp()
 }
 
 // Function to pull up a form and allow user to create a vote. Then track votes
@@ -62,11 +68,15 @@ export async function poll(message, client) {
                 msgIndex++
 
             } else if (msgIndex === 2) {
-                if (message.content === 1) {
-                    return presetOne()
-                } 
                 initMsg.delete()
                 optionsMsg.delete()
+                if (message.content === 1) {
+                    return presetOne(question)
+                } else if (message.content === 2) {
+                    return presetTwo(question)
+                }
+                
+                return userOptions(question)
 
             }
             
